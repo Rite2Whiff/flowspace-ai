@@ -4,16 +4,23 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "typecheck": "bun check"
+    "typecheck": "bun check",
+    "contract:emit": "prisma contract emit"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@prisma/cli-engine": "0.10.4",
+    "@types/bun": "latest",
+    "@types/node": "^26.6.6",
+    "prisma": "^8.0.0-rc.35"
   },
   "peerDependencies": {
     "typescript": "^7"
   },
   "dependencies": {
+    "@prisma/orm-postgres": "^8.0.0-rc.25",
     "@types/express": "^5.0.6",
-    "express": "^5.3.0"
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "pg": "^8.23.1"
   }
 }
