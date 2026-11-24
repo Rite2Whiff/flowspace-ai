@@ -5,13 +5,16 @@
   "private": true,
   "scripts": {
     "typecheck": "bun check",
-    "contract:emit": "prisma contract emit"
+    "contract:emit": "prisma contract emit",
+    "build": "bun run ./src/index.ts",
+    "dev": "bun --watch run ./src/index.ts"
   },
   "devDependencies": {
     "@prisma/cli-engine": "0.10.4",
     "@types/bcrypt": "^6.0.0",
     "@types/bun": "latest",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.6.6",
     "prisma": "^8.0.0-rc.35"
   },
@@ -23,6 +26,7 @@
     "bcrypt": "^6.0.0",
     "dotenv": "^18.0.10",
     "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.1",
     "zod": "^4.6.7"
   }
