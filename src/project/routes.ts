@@ -12,7 +12,11 @@ router.post(
   async (req, res) => {
     try {
       const title = req.body.title;
-      const createProject = await db.orm.public.Project.create({ title });
+      const workSpaceId = req.params.workSpaceId?.toString();
+      const createProject = await db.orm.public.Project.create({
+        title,
+        workSpaceId,
+      });
       return res
         .status(200)
         .json({ message: "Project successfully created", data: createProject });
