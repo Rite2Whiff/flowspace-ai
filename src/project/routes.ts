@@ -52,4 +52,48 @@ router.put(
   },
 );
 
+router.get(
+  "/projects",
+  authMiddleware,
+  verifyWorkSpaceOwner,
+  async (req, res) => {
+    try {
+      const workSpaceId = req.params.workSpaceId?.toString();
+      const projects = await db.orm.public.Project.where({ workSpaceId }).all();
+      if (!projects) {
+        return res.status(404).json({
+          message: "No projects found",
+        });
+      }
+      return res.status(200).json({ projects });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+);
+
+router.delete(
+  "/:projectId",
+  authMiddleware,
+  verifyWorkSpaceOwner,
+  async (req, res) => {
+    try {
+      const projectId = req.params.projectId?.toString();
+      const deleteProject = await db.orm.public.Project.where({
+        id: projectId,
+      }).delete();
+      if (!deleteProject) {
+        return res
+          .status(404)
+          .json({ message: "Unable to delete this project" });
+      }
+      return res.status(200).json({
+        message: "Project deleted successfully",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+);
+
 export default router;
