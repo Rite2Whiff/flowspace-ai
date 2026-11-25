@@ -27,8 +27,8 @@ model Project{
   description   String?  
   createdAt     temporal.CreatedAt
   updatedAt     temporal.UpdatedAt
-  workSpace     Workspace              @relation(fields: [projectId],references: [id])
-  projectId     String
+  workSpace     Workspace             @relation(fields: [workSpaceId],references: [id])
+  workSpaceId   String
   tasks         Task[]
 }
 

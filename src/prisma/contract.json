@@ -51,13 +51,6 @@
                   "kind": "scalar"
                 }
               },
-              "projectId": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
               "title": {
                 "nullable": false,
                 "type": {
@@ -73,6 +66,13 @@
                   "typeParams": {
                     "precision": 3
                   }
+                }
+              },
+              "workSpaceId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
                 }
               }
             },
@@ -97,7 +97,7 @@
                 "nullable": false,
                 "on": {
                   "localFields": [
-                    "projectId"
+                    "workSpaceId"
                   ],
                   "targetFields": [
                     "id"
@@ -120,14 +120,14 @@
                 "id": {
                   "column": "id"
                 },
-                "projectId": {
-                  "column": "projectId"
-                },
                 "title": {
                   "column": "title"
                 },
                 "updatedAt": {
                   "column": "updatedAt"
+                },
+                "workSpaceId": {
+                  "column": "workSpaceId"
                 }
               },
               "namespaceId": "public",
@@ -373,7 +373,7 @@
                     "id"
                   ],
                   "targetFields": [
-                    "projectId"
+                    "workSpaceId"
                   ]
                 },
                 "to": {
@@ -449,11 +449,6 @@
                   "dataType": "pg/text",
                   "nullable": false
                 },
-                "projectId": {
-                  "codecId": "pg/text@1",
-                  "dataType": "pg/text",
-                  "nullable": false
-                },
                 "title": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
@@ -466,16 +461,21 @@
                   "typeParams": {
                     "precision": 3
                   }
+                },
+                "workSpaceId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
                 }
               },
               "foreignKeys": [
                 {
                   "index": {
-                    "name": "Project_projectId_idx_a96e4d92"
+                    "name": "Project_workSpaceId_idx_c8e1aafd"
                   },
                   "source": {
                     "columns": [
-                      "projectId"
+                      "workSpaceId"
                     ],
                     "namespaceId": "public",
                     "tableName": "Project"
@@ -492,10 +492,10 @@
               "indexes": [
                 {
                   "columns": [
-                    "projectId"
+                    "workSpaceId"
                   ],
-                  "name": "Project_projectId_idx_a96e4d92",
-                  "prefix": "Project_projectId_idx",
+                  "name": "Project_workSpaceId_idx_c8e1aafd",
+                  "prefix": "Project_workSpaceId_idx",
                   "unique": false
                 }
               ],
@@ -748,7 +748,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "4b595f04cc2688f42525679a4767cac17f80c37ffdd7a1069420b40bf607ddbc"
+    "storageHash": "6df78d9b57c69bfc4bb98ee499a78a6a2730ede2c5cea5689a81cb56f42d5ead"
   },
   "execution": {
     "executionHash": "b14fb4dd227e6742a93266141e65635e0f6042715053e3dd53cfd855821df23c",

@@ -18,7 +18,7 @@ import type {
 } from '@prisma/orm-postgres/contract-types';
 
 export type StorageHash =
-  StorageHashBase<'4b595f04cc2688f42525679a4767cac17f80c37ffdd7a1069420b40bf607ddbc'>;
+  StorageHashBase<'6df78d9b57c69bfc4bb98ee499a78a6a2730ede2c5cea5689a81cb56f42d5ead'>;
 export type ExecutionHash =
   ExecutionHashBase<'b14fb4dd227e6742a93266141e65635e0f6042715053e3dd53cfd855821df23c'>;
 export type ProfileHash =
@@ -308,9 +308,9 @@ export namespace Models {
     createdAt: FieldOutputTypes['public']['Project']['createdAt'];
     description: FieldOutputTypes['public']['Project']['description'];
     id: FieldOutputTypes['public']['Project']['id'];
-    projectId: FieldOutputTypes['public']['Project']['projectId'];
     title: FieldOutputTypes['public']['Project']['title'];
     updatedAt: FieldOutputTypes['public']['Project']['updatedAt'];
+    workSpaceId: FieldOutputTypes['public']['Project']['workSpaceId'];
     tasks: public_Task[];
     workSpace: public_Workspace;
     readonly [RelationKeys]?: 'tasks' | 'workSpace';
@@ -395,12 +395,6 @@ type ContractBase = Omit<
                   readonly nullable: false;
                   readonly many: false;
                 };
-                readonly projectId: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
-                  readonly many: false;
-                };
                 readonly title: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
@@ -414,14 +408,20 @@ type ContractBase = Omit<
                   readonly typeParams: { readonly precision: 3 };
                   readonly many: false;
                 };
+                readonly workSpaceId: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
               };
               primaryKey: { readonly columns: readonly ['id'] };
               uniques: readonly [{ readonly columns: readonly ['title'] }];
               indexes: readonly [
                 {
-                  readonly name: 'Project_projectId_idx_a96e4d92';
-                  readonly prefix: 'Project_projectId_idx';
-                  readonly columns: readonly ['projectId'];
+                  readonly name: 'Project_workSpaceId_idx_c8e1aafd';
+                  readonly prefix: 'Project_workSpaceId_idx';
+                  readonly columns: readonly ['workSpaceId'];
                   readonly unique: false;
                 },
               ];
@@ -430,7 +430,7 @@ type ContractBase = Omit<
                   readonly source: {
                     readonly namespaceId: 'public' & NamespaceId;
                     readonly tableName: 'Project';
-                    readonly columns: readonly ['projectId'];
+                    readonly columns: readonly ['workSpaceId'];
                   };
                   readonly target: {
                     readonly namespaceId: 'public' & NamespaceId;
@@ -657,10 +657,6 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
-              readonly projectId: {
-                readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
-              };
               readonly title: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
@@ -672,6 +668,10 @@ type ContractBase = Omit<
                   readonly codecId: 'pg/timestamptz-date@1';
                   readonly typeParams: { readonly precision: 3 };
                 };
+              };
+              readonly workSpaceId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
             };
             readonly relations: {
@@ -691,7 +691,7 @@ type ContractBase = Omit<
                 readonly cardinality: 'N:1';
                 readonly nullable: false;
                 readonly on: {
-                  readonly localFields: readonly ['projectId'];
+                  readonly localFields: readonly ['workSpaceId'];
                   readonly targetFields: readonly ['id'];
                 };
               };
@@ -703,9 +703,9 @@ type ContractBase = Omit<
                 readonly createdAt: { readonly column: 'createdAt' };
                 readonly description: { readonly column: 'description' };
                 readonly id: { readonly column: 'id' };
-                readonly projectId: { readonly column: 'projectId' };
                 readonly title: { readonly column: 'title' };
                 readonly updatedAt: { readonly column: 'updatedAt' };
+                readonly workSpaceId: { readonly column: 'workSpaceId' };
               };
             };
           };
@@ -872,7 +872,7 @@ type ContractBase = Omit<
                 readonly cardinality: '1:N';
                 readonly on: {
                   readonly localFields: readonly ['id'];
-                  readonly targetFields: readonly ['projectId'];
+                  readonly targetFields: readonly ['workSpaceId'];
                 };
               };
               readonly user: {
