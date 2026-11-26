@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
           message: "User not found",
         });
       }
-      const verifyPassword = bcrypt.compare(
+      const verifyPassword = await bcrypt.compare(
         result.data.password,
         findUser.password,
       );
@@ -72,6 +72,7 @@ router.post("/login", async (req, res) => {
         user: {
           id: findUser.id,
           email: findUser.email,
+          username: findUser.username,
         },
       });
     }
