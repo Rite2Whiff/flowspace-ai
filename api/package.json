@@ -7,7 +7,7 @@
     "typecheck": "bun check",
     "contract:emit": "prisma contract emit",
     "build": "bun run ./src/index.ts",
-    "dev": "bun --watch run ./src/index.ts"
+    "dev": "bun --watch run "
   },
   "devDependencies": {
     "@prisma/cli-engine": "0.10.4",
