@@ -1,7 +1,9 @@
 "use client";
 import { User, UserLoginResponse, UserSignupResponse } from "@/types/user";
 import axios from "axios";
-import React, { createContext, useContext, useState } from "react";
+
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useLoading } from "./loadingContext";
 
 type AuthContext = {
   user: User | null;
@@ -21,6 +23,23 @@ export function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [user, setUser] = useState<User | null>(null);
+  const { setLoading } = useLoading();
+
+  useEffect(() => {
+    async function getUser() {
+      const response = await axios.get("http://localhost:3001/app/v1/user/me", {
+        headers: { Authorization: localStorage.getItem("token") },
+      });
+      setLoading(false);
+      setUser(response.data.user);
+    }
+
+    if (localStorage.getItem("token")) {
+      getUser();
+    } else {
+      console.log("You are not logged in");
+    }
+  }, []);
 
   async function signup(username: string, email: string, password: string) {
     const response = await axios.post(
@@ -37,6 +56,7 @@ export function AuthContextProvider({
     );
     localStorage.setItem("token", response.data.token);
     setUser(response.data.user);
+    setLoading(false);
     return response.data;
   }
 
