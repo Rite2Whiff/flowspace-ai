@@ -4,6 +4,7 @@ import axios from "axios";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useLoading } from "./loadingContext";
+import { useRouter } from "next/navigation";
 
 type AuthContext = {
   user: User | null;
@@ -13,6 +14,7 @@ type AuthContext = {
     password: string,
   ) => Promise<UserSignupResponse>;
   login: (username: string, password: string) => Promise<UserLoginResponse>;
+  logout: () => void;
 };
 
 const AuthContext = createContext<AuthContext | null>(null);
@@ -24,6 +26,7 @@ export function AuthContextProvider({
 }) {
   const [user, setUser] = useState<User | null>(null);
   const { setLoading } = useLoading();
+  const router = useRouter();
 
   useEffect(() => {
     async function getUser() {
@@ -39,7 +42,7 @@ export function AuthContextProvider({
     } else {
       console.log("You are not logged in");
     }
-  }, []);
+  }, [setLoading]);
 
   async function signup(username: string, email: string, password: string) {
     const response = await axios.post(
@@ -60,8 +63,13 @@ export function AuthContextProvider({
     return response.data;
   }
 
+  function logout() {
+    localStorage.removeItem("token");
+    router.replace("/login");
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signup, login }}>
+    <AuthContext.Provider value={{ user, signup, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
